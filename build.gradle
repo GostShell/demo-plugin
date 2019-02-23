@@ -1,3 +1,5 @@
+import aQute.bnd.gradle.Bundle
+
 plugins {
     id 'java'
     id "biz.aQute.bnd.builder" version "4.1.0"
@@ -10,6 +12,16 @@ sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
+}
+
+jar {
+    bnd(
+            'Export-Package':'com.flocondria.greet.Greeting',
+    )
+}
+
+task bundle(type: Bundle) {
+    from sourceSets.main.output
 }
 
 dependencies {
