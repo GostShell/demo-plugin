@@ -13,11 +13,6 @@ repositories {
     maven {url 'https://jitpack.io'}
 }
 
-sourceSets {
-    main {	java { srcDir 'src' }	resources { srcDir 'src' } }
-    test {	java { srcDir 'test' }	resources { srcDir 'test' } }
-}
-
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     implementation group: 'org.apache.felix', name: 'org.apache.felix.framework', version: '6.0.2'
@@ -31,13 +26,18 @@ jar {
         attributes(
                 '-sources': 'true',
                 'Export-Package':'com.flocondria.greet.Greeting',
+                'Import-Package': 'org.osgi.framework',
                 'Automatic-Module-Name': "$moduleName",
                 'Bundle-Name': "$bundleName",
                 'Bundle-SymbolicName': "$bundleName",
+                'Bundle-Activator': 'com.flocondria.greet.Greeting',
                 'Built-By': System.getProperty("user.name"),
                 'Built-On': new Date().format('yyyy-MM-dd'),
                 'Repository-Revision': "$repoRevision",
                 'Repository-URL': "$repositoryURL",
         )
+    }
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
     }
 }
