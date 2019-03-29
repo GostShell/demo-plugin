@@ -9,7 +9,6 @@ public class Greeting implements BundleActivator {
     public void start(BundleContext context) throws Exception {
         System.out.println("The bundle is starting");
         greet();
-        //throw new Exception("Failing load plugin");
     }
 
     @Override

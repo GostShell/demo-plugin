@@ -15,8 +15,7 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
-    implementation group: 'org.apache.felix', name: 'org.apache.felix.framework', version: '6.0.2'
-    implementation 'com.github.GostShell:sdk:v0.0.1-alpha'
+    implementation 'com.github.GostShell:sdk:v0.0.2-alpha'
 }
 
 def repoRevision = System.getenv("REPO_REVISION")!=null?System.getenv("REPO_REVISION"):repositoryRevision
