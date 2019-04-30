@@ -1,7 +1,11 @@
 plugins {
     id 'java'
     id "biz.aQute.bnd.builder" version "4.1.0"
+    id 'org.jayware.osgi-ds' version '0.5.5'
 }
+
+apply plugin: 'osgi'
+apply plugin: 'osgi-ds'
 
 group 'com.flocondria.bnd.plug'
 version '1.0-SNAPSHOT'
@@ -15,7 +19,7 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
-    implementation 'com.github.GostShell:sdk:v0.0.2-alpha'
+    implementation 'com.github.GostShell:sdk:v0.0.3.6-alpha'
 }
 
 def repoRevision = System.getenv("REPO_REVISION")!=null?System.getenv("REPO_REVISION"):repositoryRevision
@@ -24,18 +28,20 @@ jar {
     manifest {
         attributes(
                 '-sources': 'true',
-                'Export-Package':'com.flocondria.greet.Greeting',
-                'Import-Package': 'org.osgi.framework',
+                'Export-Package':'com.flocondria.greet',
+                'Import-Package': 'org.osgi.framework;com.evergarden.sdk.*',
                 'Automatic-Module-Name': "$moduleName",
                 'Bundle-Name': "$bundleName",
                 'Bundle-SymbolicName': "$bundleName",
                 'Bundle-Activator': 'com.flocondria.greet.Greeting',
+                'Bundle-Version':'1.0',
                 'Built-By': System.getProperty("user.name"),
                 'Built-On': new Date().format('yyyy-MM-dd'),
                 'Repository-Revision': "$repoRevision",
                 'Repository-URL': "$repositoryURL",
+                'Service-Component': 'OSGI-INF/*.xml',
         )
-    }
+    } 
     from {
         configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
     }
